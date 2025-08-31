@@ -1,0 +1,54 @@
+SELECT*
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+
+----How many products category we have 
+SELECT DISTINCT(PRODUCT_CATEGORY)
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+
+---Checking how many quantity sold per category and gender 
+SELECT DISTINCT GENDER, PRODUCT_CATEGORY,
+SUM(QUANTITY),
+SUM(TOTAL_AMOUNT),
+FROM PEP_SALES.PEP_SHOP.PEP_DATA
+GROUP BY PRODUCT_CATEGORY, GENDER
+ORDER BY GENDER ASC;
+
+----Checking min and Max age
+SELECT MIN(AGE)
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+SELECT MAX(AGE)
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+
+----Checking min and Max of Total Spend
+SELECT MIN(TOTAL_AMOUNT)
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+SELECT MAX(TOTAL_AMOUNT)
+FROM PEP_SALES.PEP_SHOP.PEP_DATA;
+
+SELECT COUNT(DISTINCT TRANSACTION_ID) AS number_of_sales,
+       COUNT(DISTINCT CUSTOMER_ID) AS number_of_unique_customers,
+       
+       DATE AS Purchased_date,
+       DAYNAME(DATE) AS Day_name,
+       MONTHNAME(DATE) AS Name_of_Month,
+       DAYOFMONTH(DATE) AS Day_of_Month,
+      
+       GENDER,
+       PRODUCT_CATEGORY,
+       SUM (TOTAL_AMOUNT) AS Total_Revenue,
+       SUM(QUANTITY) AS Total_Quantity,
+
+CASE 
+    WHEN AGE BETWEEN 18 AND 30 THEN 'Youth'
+    WHEN AGE BETWEEN 31 AND 40 THEN 'Adult'
+    ELSE'Senior'
+END AS Age_Group,
+
+-----Spending Group
+CASE
+    WHEN TOTAL_AMOUNT BETWEEN 25 AND 100 THEN 'Low Spend' 
+    WHEN TOTAL_AMOUNT >100 AND TOTAL_AMOUNT<= 300 THEN 'Medium Spend'
+    ELSE 'High Spend'
+    END AS Spend_Group, 
+   FROM PEP_SALES.PEP_SHOP.PEP_DATA
+ Group BY ALL;        
